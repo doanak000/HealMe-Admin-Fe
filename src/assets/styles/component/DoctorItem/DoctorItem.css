@@ -1,0 +1,8 @@
+.doctor-item-container:hover {
+  cursor: pointer;
+}
+
+.doctor-name:hover {
+  color: red;
+  font-weight: bold;
+}

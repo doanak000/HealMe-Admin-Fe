@@ -1,0 +1,30 @@
+.navbar {
+  box-shadow: 0 4px 4px 0 rgb(0 0 0 / 10%);
+}
+
+.header__navbar-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.header__navbar-item {
+  display: inline-block;
+  line-height: 100%;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.header__navbar-item:hover {
+  cursor: pointer;
+  color: #0059a7;
+}
+
+.header__navbar-item.active {
+  color: #0059a7;
+}
+
+.login-btn {
+  color: #0059a7;
+}
