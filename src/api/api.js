@@ -46,7 +46,10 @@ export const deleteUserById = async (userId) => {
   const response = await authAxios.post(`/users/api/delete/${userId}`);
   return response.data;
 };
-
+export const createUser = async (values) => {
+  const response = await authAxios.post(`/users/api/create`, values);
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -54,4 +57,5 @@ export default {
   getAllUsers,
   updateUser,
   deleteUserById,
+  createUser,
 };

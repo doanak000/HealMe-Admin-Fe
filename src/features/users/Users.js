@@ -1,6 +1,11 @@
 import { Button, Drawer, Form, Input, Select, Space, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
-import { deleteUserById, getAllUsers, updateUser } from "../../api/api.js";
+import {
+  createUser,
+  deleteUserById,
+  getAllUsers,
+  updateUser,
+} from "../../api/api.js";
 import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { Notification } from "../../components/Notification/Notification";
 
@@ -53,8 +58,23 @@ const Users = () => {
   const onCloseCreate = () => {
     setOpenCreate(false);
   };
-  const onFinishCreate = (values) => {
-    setOpenCreate(false);
+  const onFinishCreate = async (values) => {
+    try {
+      await createUser(values);
+      Notification({
+        type: NOTIFICATION_TYPE.SUCCESS,
+        message: "Edit success",
+        description: null,
+      });
+      getAllUsersApi();
+      setOpenCreate(false);
+    } catch (error) {
+      Notification({
+        type: NOTIFICATION_TYPE.ERROR,
+        message: "Edit fail",
+        description: null,
+      });
+    }
   };
 
   const onFinishFailedCreate = (errorInfo) => {
@@ -196,40 +216,69 @@ const Users = () => {
         open={openCreate}
       >
         <Form
-          name="basic"
+          name="create"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
           initialValues={{ remember: true }}
-          onFinishCreate={onFinishCreate}
-          onFinishFailedCreate={onFinishFailedCreate}
+          onFinish={onFinishCreate}
           autoComplete="off"
         >
-          <Form.Item label="User Name" name="username">
+          <Form.Item
+            label="User Name"
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please input this field!",
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item label="Password" name="password">
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input this field!",
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item label="Refill Password" name="password2">
-            <Input />
-          </Form.Item>
-          <Form.Item label="USER ROLE" name="role">
+          <Form.Item label="USER ROLE" name="role_id">
             <Select>
-              <Option value="duocSi">Dược sĩ</Option>
-              <Option value="bacSi">Bác sĩ</Option>
-              <Option value="admin">Admin</Option>
-              <Option value="benhNhan">Bệnh Nhân</Option>
+              <Option value="1">Admin</Option>
+              <Option value="2">Patient </Option>
+              <Option value="3">clinic</Option>
+
+              <Option value="4">pharmacy</Option>
             </Select>
           </Form.Item>
-          <Form.Item label="Email" name="email">
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input this field!",
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label="Phone Number" name="phone">
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Address" name="address">
+          <Form.Item
+            label="Name"
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Please input this field!",
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
 
