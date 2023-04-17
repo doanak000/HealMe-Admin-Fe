@@ -7,6 +7,7 @@ import {
   VideoCameraOutlined,
   UploadOutlined,
   LogoutOutlined,
+  MedicineBoxOutlined,
 } from "@ant-design/icons";
 import {
   CustomContent,
@@ -59,7 +60,7 @@ const LayoutAdmin = (props) => {
         width={theme.sideBarWidth}
         style={!isLoggedIn ? { display: "none" } : {}}
       >
-        <Logo>HEALTH ME</Logo>
+        <Logo>HEAL ME</Logo>
         <CustomMenu
           theme="dark"
           mode="inline"
@@ -78,6 +79,17 @@ const LayoutAdmin = (props) => {
               onClick={() => selectTabName(translation.TAB_USER)}
             >
               {translation.TAB_USER}
+            </Link>
+          </CustomMenuItem>
+          <CustomMenuItem
+            key={SIDEBAR.TAB_PHARMACY}
+            icon={<MedicineBoxOutlined style={{ fontSize: theme.sizes.M }} />}
+          >
+            <Link
+              to={PATH.PHARMACY}
+              onClick={() => selectTabName(translation.TAB_PHARMACY)}
+            >
+              {translation.TAB_PHARMACY}
             </Link>
           </CustomMenuItem>
           <CustomMenuItem

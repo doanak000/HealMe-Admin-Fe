@@ -7,19 +7,21 @@ export const PATH = Object.freeze({
   HOME: "/home",
   PROFILE: "/home/profile",
   DOCTOR: "/home/doctor/:id",
-  PHARMACIST: "/pharmacist",
   PRESCRIPTION: "/home/prescription",
+  PHARMACY: "/pharmacy",
+  PHARMACY_DETAIL: "/pharmacy/:id",
 });
 
 export const SIDEBAR = Object.freeze({
   USER: PATH.USER,
   EVENT: PATH.EVENT,
   VIDEO: PATH.VIDEO,
+  PHARMACY: PATH.PHARMACY,
   LOGOUT: "logout",
   PROFILE: PATH.PROFILE,
   DOCTOR: PATH.DOCTOR,
-  PHARMACIST: PATH.PHARMACIST,
   PRESCRIPTION: PATH.PRESCRIPTION,
+  PHARMACY_DETAIL: PATH.PHARMACY_DETAIL,
 });
 
 export const ROLE = Object.freeze({
@@ -33,6 +35,8 @@ export const ROUTES = Object.freeze({
     { path: PATH.USER, component: "UsersPage" },
     { path: PATH.EVENT, component: "EventPage" },
     { path: PATH.VIDEO, component: "VideoPage" },
+    { path: PATH.PHARMACY_DETAIL, component: "PharmacyDetailPage" },
+    { path: PATH.PHARMACY, component: "PharmacyPage" },
   ],
 
   PUBLIC: [
