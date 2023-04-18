@@ -15,6 +15,7 @@ const Users = () => {
   const [openCreate, setOpenCreate] = useState(false);
   const [dataUsers, setDataUsers] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
+
   const showDrawer = (record) => {
     console.log("helo", record);
     setSelectedUser(record);

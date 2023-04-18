@@ -20,6 +20,7 @@ import {
   Select,
   Space,
   Drawer,
+  Popconfirm,
 } from "antd";
 import { GiMedicines } from "react-icons/gi";
 import { PlusOutlined } from "@ant-design/icons";
@@ -127,9 +128,17 @@ const PharmacyDetail = () => {
       render: (_, record) => (
         <Space size="middle">
           <Button onClick={() => handleUpdateMedicine(record)}>Cập nhật</Button>
-          <Button type="danger" onClick={() => handleDeleteMedicine(record)}>
-            Xóa
-          </Button>
+
+          <Popconfirm
+            title="Xóa thuốc"
+            description="Bạn có muốn xóa thuốc ra khỏi nhà thuốc?"
+            onConfirm={() => handleDeleteMedicine(record)}
+            // onCancel={cancel}
+            okText="Có"
+            cancelText="Không"
+          >
+            <Button type="danger">Xóa</Button>
+          </Popconfirm>
         </Space>
       ),
     },
@@ -316,7 +325,7 @@ const PharmacyDetail = () => {
               }}
             >
               <Button type="primary" htmlType="submit">
-                Submit
+                Cập nhật
               </Button>
             </Form.Item>
           </Form>
