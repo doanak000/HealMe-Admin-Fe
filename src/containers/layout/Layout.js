@@ -73,6 +73,7 @@ const LayoutAdmin = (props) => {
           <CustomMenuItem
             key={SIDEBAR.USER}
             icon={<UserOutlined style={{ fontSize: theme.sizes.M }} />}
+            className={userInfo?.role_id === 1 ? "d-block" : "d-none"}
           >
             <Link
               to={PATH.USER}
@@ -84,34 +85,17 @@ const LayoutAdmin = (props) => {
           <CustomMenuItem
             key={SIDEBAR.TAB_PHARMACY}
             icon={<MedicineBoxOutlined style={{ fontSize: theme.sizes.M }} />}
+            className={
+              userInfo?.role_id === 3 && userInfo?.business_type === 2
+                ? "d-block"
+                : "d-none"
+            }
           >
             <Link
               to={PATH.PHARMACY}
               onClick={() => selectTabName(translation.TAB_PHARMACY)}
             >
               {translation.TAB_PHARMACY}
-            </Link>
-          </CustomMenuItem>
-          <CustomMenuItem
-            key={SIDEBAR.EVENT}
-            icon={<VideoCameraOutlined style={{ fontSize: theme.sizes.M }} />}
-          >
-            <Link
-              to={PATH.EVENT}
-              onClick={() => selectTabName(translation.TAB_EVENT)}
-            >
-              {translation.TAB_EVENT}
-            </Link>
-          </CustomMenuItem>
-          <CustomMenuItem
-            key={SIDEBAR.VIDEO}
-            icon={<UploadOutlined style={{ fontSize: theme.sizes.M }} />}
-          >
-            <Link
-              to={PATH.VIDEO}
-              onClick={() => selectTabName(translation.TAB_VIDEO)}
-            >
-              {translation.TAB_VIDEO}
             </Link>
           </CustomMenuItem>
           <CustomMenuItem
