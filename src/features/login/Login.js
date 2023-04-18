@@ -56,7 +56,7 @@ const Login = () => {
     setLoadingState(true);
     try {
       const userData = await login(user);
-      if (userData.user.role !== "admin") {
+      if (userData.user.role === "patient") {
         throw new Error("Please Login by Admin account");
       }
       dispatch(loginSuccess(userData));

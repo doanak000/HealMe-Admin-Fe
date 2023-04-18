@@ -6,6 +6,7 @@ export const translation = {
     TAB_USER: "Users",
     TAB_VIDEO: "Video",
     TAB_EVENT: "Event",
+    TAB_PHARMACY: "Pharmacy",
     CONFIRM_LOGOUT: "Are you sure you want to logout?",
     NOTI_LOGIN_SUCCESS: "Login success!",
     NOTI_LOGIN_FAIL: "Invalid user ID or password.",
