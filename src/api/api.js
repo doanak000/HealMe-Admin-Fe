@@ -41,6 +41,29 @@ export const updateUser = async (userId, userData) => {
   );
   return response.data;
 };
+export const getAllProvince = async () => {
+  const response = await nonAuthAxios.get("/area/province");
+  return response.data;
+};
+export const getDistrictInProvince = async (provinceId) => {
+  const response = await nonAuthAxios.get(
+    `/area/province/${provinceId}/district`
+  );
+  return response.data;
+};
+export const getWardInDistrict = async (districtId) => {
+  const response = await nonAuthAxios.get(`/area/district/${districtId}/ward`);
+  return response.data;
+};
+
+export const createPatientProfile = async (data) => {
+  const response = await nonAuthAxios.post("/patient/api/create", data);
+  return response.data;
+};
+export const createBusinessProfile = async (data) => {
+  const response = await nonAuthAxios.post("/business/api/create", data);
+  return response.data;
+};
 
 export const deleteUserById = async (userId) => {
   const response = await authAxios.post(`/users/api/delete/${userId}`);
@@ -103,4 +126,9 @@ export default {
   addMedicineToPharmacy,
   deleteMedicineFromPharmacy,
   updateMedicineInPharmacy,
+  getAllProvince,
+  getDistrictInProvince,
+  getWardInDistrict,
+  createPatientProfile,
+  createBusinessProfile,
 };
