@@ -236,7 +236,7 @@ const PharmacyDetail = () => {
         <Table columns={columns} dataSource={data} />
       </div>
       <div>
-        <Modal open={isModalOpen} footer={null} className="w-25">
+        <Modal open={isModalOpen} onCancel={() => setIsModalOpen(false)} footer={null} className="w-25">
           <Form
             name="add_medicine"
             labelCol={{

@@ -173,11 +173,19 @@ const Users = () => {
   const handleDelete = async (record) => {
     try {
       await deleteUserById(record.id);
-      Notification({
-        type: NOTIFICATION_TYPE.SUCCESS,
-        message: "Delete success",
-        description: null,
-      });
+      if (record.account_status === 1) {
+        Notification({
+          type: NOTIFICATION_TYPE.SUCCESS,
+          message: "Disable successfully",
+          description: null,
+        });
+      } else {
+        Notification({
+          type: NOTIFICATION_TYPE.SUCCESS,
+          message: "Enable successfully",
+          description: null,
+        });
+      }
       getAllUsersApi();
       setOpen(false);
     } catch (error) {
@@ -232,10 +240,10 @@ const Users = () => {
     },
     {
       width: "70",
-      title: "Account Status",
+      title: "Status",
       dataIndex: "account_status",
       key: "account_status",
-      render: (text) => <a>{text == 1 ? "Active" : "InActive"}</a>,
+      render: (text) => <a>{text == 1 ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</a>,
     },
     {
       width: "200",
@@ -249,13 +257,20 @@ const Users = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a href={`mailto: ${text}`}>{text}</a>,
     },
     {
       width: "150",
       title: "Phone number",
       dataIndex: "phone",
       key: "phone",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      width: "150",
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
       render: (text) => <a>{text}</a>,
     },
     {

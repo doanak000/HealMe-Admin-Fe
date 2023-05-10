@@ -4,8 +4,6 @@ import {
   // MenuUnfoldOutlined,
   // MenuFoldOutlined,
   UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
   LogoutOutlined,
   MedicineBoxOutlined,
 } from "@ant-design/icons";
@@ -60,7 +58,9 @@ const LayoutAdmin = (props) => {
         width={theme.sideBarWidth}
         style={!isLoggedIn ? { display: "none" } : {}}
       >
-        <Logo>HEAL ME</Logo>
+        <Logo>
+          <Link to={'/home'} className="text-decoration-none">HEAL ME</Link>
+        </Logo>
         <CustomMenu
           theme="dark"
           mode="inline"
@@ -94,6 +94,7 @@ const LayoutAdmin = (props) => {
             <Link
               to={PATH.PHARMACY}
               onClick={() => selectTabName(translation.TAB_PHARMACY)}
+              className="text-decoration-none"
             >
               {translation.TAB_PHARMACY}
             </Link>
