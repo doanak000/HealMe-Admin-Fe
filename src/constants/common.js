@@ -44,7 +44,7 @@ export const ROUTES = Object.freeze({
     { path: PATH.LOGIN, component: "LoginPage" },
     { path: PATH.REGISTER, component: "RegisterPage" },
   ],
-  
+
 });
 
 export const NOTIFICATION_TYPE = Object.freeze({
