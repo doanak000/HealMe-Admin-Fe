@@ -24,6 +24,9 @@ import {
 import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { Notification } from "../../components/Notification/Notification";
 import moment from "moment";
+import { CSVDownload, CSVLink } from "react-csv";
+import { Excel } from "antd-table-saveas-excel";
+import ExportExcel from "../../utils/excelexport.js";
 
 const { Option } = Select;
 const Users = () => {
@@ -268,10 +271,10 @@ const Users = () => {
     },
     {
       width: "150",
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-      render: (text) => <a>{text}</a>,
+      title: "Created At",
+      dataIndex: "created_date",
+      key: "created_date",
+      render: (text) => <a>{text.substring(0, 10)}</a>,
     },
     {
       width: "200",
@@ -287,11 +290,13 @@ const Users = () => {
       ),
     },
   ];
+
   return (
     <>
-      <Button onClick={showDrawerCreate} style={{ marginBottom: "10px" }}>
+      <Button className="me-2" onClick={showDrawerCreate} style={{ marginBottom: "10px" }}>
         Create User
       </Button>
+      <ExportExcel excelData={dataUsers} fileName={'Excel Export'} />
       <Table columns={columns} dataSource={dataUsers} />
       <Drawer title="Edit User" placement="right" onClose={onClose} open={open}>
         <Form
