@@ -26,6 +26,7 @@ import { GiMedicines } from "react-icons/gi";
 import { PlusOutlined } from "@ant-design/icons";
 import { Notification } from "../Notification/Notification";
 import { NOTIFICATION_TYPE } from "../../constants/common";
+import ExportExcel from "../../utils/excelexport";
 
 const PharmacyDetail = () => {
   const params = useParams();
@@ -231,6 +232,9 @@ const PharmacyDetail = () => {
         >
           Thêm thuốc
         </Button>
+      </div>
+      <div>
+        <ExportExcel excelData={data} fileName={'Excel Export'} />
       </div>
       <div>
         <Table columns={columns} dataSource={data} />
