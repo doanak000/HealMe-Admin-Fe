@@ -24,8 +24,7 @@ import {
 import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { Notification } from "../../components/Notification/Notification";
 import moment from "moment";
-import { CSVDownload, CSVLink } from "react-csv";
-import { Excel } from "antd-table-saveas-excel";
+import JsPDF from 'jspdf';
 import ExportExcel from "../../utils/excelexport.js";
 
 const { Option } = Select;
@@ -291,13 +290,22 @@ const Users = () => {
     },
   ];
 
+  const generatePDF = () => {
+    const report = new JsPDF('portrait', 'pt', 'a4');
+    report.html(document.querySelector('#table'))
+      .then(() => report.save('report.pdf'))
+  }
+
   return (
     <>
       <Button className="me-2" onClick={showDrawerCreate} style={{ marginBottom: "10px" }}>
         Create User
       </Button>
+      <Button className="bg-info text-white me-2" onClick={generatePDF}>
+        Export to PDF
+      </Button>
       <ExportExcel excelData={dataUsers} fileName={'Excel Export'} />
-      <Table columns={columns} dataSource={dataUsers} />
+      <Table columns={columns} dataSource={dataUsers} id="table" />
       <Drawer title="Edit User" placement="right" onClose={onClose} open={open}>
         <Form
           name="basic"
