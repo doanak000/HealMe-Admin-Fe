@@ -41,9 +41,9 @@
     "yarn": "^1.22.10"
   },
   "scripts": {
-    "start": "copy .env.staging .env && craco start && react-scripts start",
-    "build": "copy .env.production .env && craco build",
-    "build-stag": "copy .env.staging .env && craco build",
+    "start": "cp .env.staging .env && craco start && react-scripts start",
+    "build": "cp .env.production .env && craco build",
+    "build-stag": "cp .env.staging .env && craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },

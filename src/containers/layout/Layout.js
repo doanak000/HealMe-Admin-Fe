@@ -59,7 +59,9 @@ const LayoutAdmin = (props) => {
         style={!isLoggedIn ? { display: "none" } : {}}
       >
         <Logo>
-          <Link to={'/home'} className="text-decoration-none">HEAL ME</Link>
+          <Link to={"/home"} className="text-decoration-none">
+            HealMe
+          </Link>
         </Logo>
         <CustomMenu
           theme="dark"
