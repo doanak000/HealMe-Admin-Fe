@@ -20,6 +20,7 @@
     "caniuse-lite": "^1.0.30001418",
     "craco-less": "^1.17.1",
     "graphql": "^15.5.0",
+    "moment": "^2.29.4",
     "openai": "^3.2.1",
     "react": "^17.0.1",
     "react-bootstrap": "^2.7.2",

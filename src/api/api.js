@@ -111,6 +111,20 @@ export const updateMedicineInPharmacy = async (medicineId, data) => {
   );
   return response.data;
 };
+export const getOrderPres = async (id) => {
+  const response = await authAxios.get(`/prescription/order/pharmacy/${id}`);
+  return response.data;
+};
+export const updateStatusOrderPres = async (id) => {
+  const response = await authAxios.post(
+    `/prescription/order/${id}/update/status`
+  );
+  return response.data;
+};
+export const cancelOrderPres = async (id) => {
+  const response = await authAxios.post(`/prescription/order/${id}/cancel`);
+  return response.data;
+};
 // Export all API call functions
 export default {
   login,
@@ -131,4 +145,7 @@ export default {
   getWardInDistrict,
   createPatientProfile,
   createBusinessProfile,
+  getOrderPres,
+  updateStatusOrderPres,
+  cancelOrderPres,
 };

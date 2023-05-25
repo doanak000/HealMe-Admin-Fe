@@ -99,6 +99,22 @@ const LayoutAdmin = (props) => {
             </Link>
           </CustomMenuItem>
           <CustomMenuItem
+            key={SIDEBAR.TAB_ORDER}
+            icon={<MedicineBoxOutlined style={{ fontSize: theme.sizes.M }} />}
+            className={
+              userInfo?.role_id === 3 && userInfo?.business_type === 2
+                ? "d-block"
+                : "d-none"
+            }
+          >
+            <Link
+              to={PATH.ORDER_PRES}
+              onClick={() => selectTabName(translation.TAB_ORDER)}
+            >
+              Order Pres
+            </Link>
+          </CustomMenuItem>
+          <CustomMenuItem
             key={SIDEBAR.LOGOUT}
             icon={<LogoutOutlined style={{ fontSize: theme.sizes.M }} />}
             onClick={logoutHandler}
