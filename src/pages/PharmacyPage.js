@@ -27,7 +27,6 @@ const PharmacyPage = () => {
     },
     {
       width: "200",
-      title: "Action",
       key: "action",
       render: (_, record) => (
         <Button type="primary">

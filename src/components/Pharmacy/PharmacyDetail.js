@@ -26,6 +26,8 @@ import { GiMedicines } from "react-icons/gi";
 import { PlusOutlined } from "@ant-design/icons";
 import { Notification } from "../Notification/Notification";
 import { NOTIFICATION_TYPE } from "../../constants/common";
+import ExportExcel from "../../utils/excelexport";
+import jsPDF from "jspdf";
 
 const PharmacyDetail = () => {
   const params = useParams();
@@ -216,6 +218,12 @@ const PharmacyDetail = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const generatePDF = () => {
+    const report = new jsPDF('landscape', 'pt', 'a4');
+    report.html(document.querySelector('#table'))
+      .then(() => report.save('report.pdf'))
+  }
+
   return (
     <div>
       <div>
@@ -233,10 +241,16 @@ const PharmacyDetail = () => {
         </Button>
       </div>
       <div>
-        <Table columns={columns} dataSource={data} />
+        <Button className="bg-info text-white me-2" onClick={generatePDF}>
+          Export to PDF
+        </Button>
+        <ExportExcel excelData={data} fileName={'Excel Export'} />
       </div>
       <div>
-        <Modal open={isModalOpen} footer={null} className="w-25">
+        <Table columns={columns} dataSource={data} id="table" />
+      </div>
+      <div>
+        <Modal open={isModalOpen} onCancel={() => setIsModalOpen(false)} footer={null} className="w-25">
           <Form
             name="add_medicine"
             labelCol={{

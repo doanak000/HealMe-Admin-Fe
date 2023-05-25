@@ -24,6 +24,8 @@ import {
 import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { Notification } from "../../components/Notification/Notification";
 import moment from "moment";
+import JsPDF from 'jspdf';
+import ExportExcel from "../../utils/excelexport.js";
 
 const { Option } = Select;
 const Users = () => {
@@ -173,11 +175,19 @@ const Users = () => {
   const handleDelete = async (record) => {
     try {
       await deleteUserById(record.id);
-      Notification({
-        type: NOTIFICATION_TYPE.SUCCESS,
-        message: "Delete success",
-        description: null,
-      });
+      if (record.account_status === 1) {
+        Notification({
+          type: NOTIFICATION_TYPE.SUCCESS,
+          message: "Disable successfully",
+          description: null,
+        });
+      } else {
+        Notification({
+          type: NOTIFICATION_TYPE.SUCCESS,
+          message: "Enable successfully",
+          description: null,
+        });
+      }
       getAllUsersApi();
       setOpen(false);
     } catch (error) {
@@ -232,10 +242,10 @@ const Users = () => {
     },
     {
       width: "70",
-      title: "Account Status",
+      title: "Status",
       dataIndex: "account_status",
       key: "account_status",
-      render: (text) => <a>{text == 1 ? "Active" : "InActive"}</a>,
+      render: (text) => <a>{text == 1 ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</a>,
     },
     {
       width: "200",
@@ -249,7 +259,7 @@ const Users = () => {
       title: "Email",
       dataIndex: "email",
       key: "email",
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a href={`mailto: ${text}`}>{text}</a>,
     },
     {
       width: "150",
@@ -257,6 +267,13 @@ const Users = () => {
       dataIndex: "phone",
       key: "phone",
       render: (text) => <a>{text}</a>,
+    },
+    {
+      width: "150",
+      title: "Created At",
+      dataIndex: "created_date",
+      key: "created_date",
+      render: (text) => <a>{text.substring(0, 10)}</a>,
     },
     {
       width: "200",
@@ -272,12 +289,23 @@ const Users = () => {
       ),
     },
   ];
+
+  const generatePDF = () => {
+    const report = new JsPDF('portrait', 'pt', 'a4');
+    report.html(document.querySelector('#table'))
+      .then(() => report.save('report.pdf'))
+  }
+
   return (
     <>
-      <Button onClick={showDrawerCreate} style={{ marginBottom: "10px" }}>
+      <Button className="me-2" onClick={showDrawerCreate} style={{ marginBottom: "10px" }}>
         Create User
       </Button>
-      <Table columns={columns} dataSource={dataUsers} />
+      <Button className="bg-info text-white me-2" onClick={generatePDF}>
+        Export to PDF
+      </Button>
+      <ExportExcel excelData={dataUsers} fileName={'Excel Export'} />
+      <Table columns={columns} dataSource={dataUsers} id="table" />
       <Drawer title="Edit User" placement="right" onClose={onClose} open={open}>
         <Form
           name="basic"
