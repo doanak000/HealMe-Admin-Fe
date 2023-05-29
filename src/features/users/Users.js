@@ -147,6 +147,14 @@ const Users = () => {
   const onFinishCreate = async (values) => {
     try {
       const userData = await createUser(values);
+      if(userData[0][0]?.error_message) {
+        Notification({
+          type: NOTIFICATION_TYPE.ERROR,
+          message: userData[0][0]?.error_message,
+          description: null,
+        });
+        return;
+      }
       setUserId(userData[0][0]?.id);
       Notification({
         type: NOTIFICATION_TYPE.SUCCESS,
