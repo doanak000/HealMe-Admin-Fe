@@ -35,14 +35,14 @@ export const ROLE = Object.freeze({
 export const ROUTES = Object.freeze({
   PRIVATE: [
     { path: PATH.USER, component: "UsersPage" },
-    // { path: PATH.PHARMACY_DETAIL, component: "PharmacyDetailPage" },
-    // { path: PATH.PHARMACY, component: "PharmacyPage" },
-  ],
-  PHARMACY: [
     { path: PATH.PHARMACY_DETAIL, component: "PharmacyDetailPage" },
     { path: PATH.PHARMACY, component: "PharmacyPage" },
     { path: PATH.ORDER_PRES, component: "OrderPresPage" },
   ],
+  // PHARMACY: [
+  //   { path: PATH.PHARMACY_DETAIL, component: "PharmacyDetailPage" },
+  //   { path: PATH.PHARMACY, component: "PharmacyPage" },
+  // ],
   PUBLIC: [
     { path: PATH.LOGIN, component: "LoginPage" },
     { path: PATH.REGISTER, component: "RegisterPage" },
