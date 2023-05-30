@@ -40,6 +40,7 @@ const Users = () => {
   const [disabledWard, setDisabledWard] = useState(true);
   const [selectedWard, setSelectedWard] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [businessType, setBussinessType] = useState(1);
   const [step, setStep] = useState(1);
   const [isBusinessId, setIsBusinessId] = useState(3);
   const getAllProvinceApi = async () => {
@@ -58,7 +59,6 @@ const Users = () => {
       label,
       ...rest,
     }));
-    console.log("district", cookedData);
     setOptionsDistrict(cookedData);
   };
   const getWardInDistrictApi = async (districtId) => {
@@ -145,8 +145,21 @@ const Users = () => {
     setOpenCreate(false);
   };
   const onFinishCreate = async (values) => {
+    let {username, password,role_id, email} = values;
+    // business_type
     try {
-      const userData = await createUser(values);
+      if (role_id == 3) setBussinessType(1);
+      if (role_id == 4) {
+          role_id = 3;
+          setBussinessType(2);
+      }
+      const newData = {
+        username, 
+        password, 
+        role_id: 3,
+        email
+      }
+      const userData = await createUser(newData);
       if(userData[0][0]?.error_message) {
         Notification({
           type: NOTIFICATION_TYPE.ERROR,
@@ -155,7 +168,7 @@ const Users = () => {
         });
         return;
       }
-      setUserId(userData[0][0]?.id);
+      setUserId(userData[0][0]?.user_id);
       Notification({
         type: NOTIFICATION_TYPE.SUCCESS,
         message: " success",
@@ -209,12 +222,13 @@ const Users = () => {
   const onCreateProfile = async (values) => {
     const profileData = {
       ...values,
-      birthday: moment(values?.birthday).format("YYYY-MM-DD"),
+      //birthday: moment(values?.birthday).format("YYYY-MM-DD"),
+      business_type: businessType,
       ward: selectedWard,
-      userid: userId,
+      user_id: userId,
     };
     try {
-      if (isBusinessId == 2) {
+      if (isBusinessId === 2) {
         const profileDataResponse = await createPatientProfile(profileData);
       } else {
         const profileDataResponse = await createBusinessProfile(profileData);
@@ -401,8 +415,7 @@ const Users = () => {
                 <Option value="1">Admin</Option>
                 <Option value="2">Patient </Option>
                 <Option value="3">clinic</Option>
-
-                <Option value="4">pharmacy</Option>
+                <Option value="4">pharmacy </Option>
               </Select>
             </Form.Item>
             <Form.Item

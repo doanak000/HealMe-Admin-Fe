@@ -3,9 +3,6 @@ import React from "react";
 import DoctorList from "../Doctor/DoctorList/DoctorList";
 
 const HomeContent = () => {
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
   return (
     <div className="my-3">
       <h5>Tìm kiếm bác sĩ/dược sĩ</h5>
@@ -17,7 +14,6 @@ const HomeContent = () => {
               style={{
                 width: 100,
               }}
-              onChange={handleChange}
               options={[
                 {
                   value: 1,
