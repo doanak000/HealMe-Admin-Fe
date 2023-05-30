@@ -87,11 +87,12 @@ const LayoutAdmin = (props) => {
           <CustomMenuItem
             key={SIDEBAR.TAB_PHARMACY}
             icon={<MedicineBoxOutlined style={{ fontSize: theme.sizes.M }} />}
+            className={userInfo?.role_id === 3 ? "d-none" : "d-block text-decoration-none"}
           >
             <Link
               to={PATH.PHARMACY}
               onClick={() => selectTabName(translation.TAB_PHARMACY)}
-              className="text-decoration-none"
+              className={userInfo?.role_id === 3 ? "d-none" : "d-block text-decoration-none"}
             >
               {translation.TAB_PHARMACY}
             </Link>

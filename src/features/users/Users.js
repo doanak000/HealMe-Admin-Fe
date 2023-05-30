@@ -305,7 +305,7 @@ const Users = () => {
         <Space size="middle">
           <Button onClick={() => showDrawer(record)}>Edit</Button>
           <Button onClick={() => handleDelete(record)}>
-            {_.account_status == 1 ? "Disbale" : "Enable"}
+            {_.account_status == 1 ? <p className="text-danger fw-bold">Disable</p> : <p className="text-info fw-bold">Enable</p>}
           </Button>
         </Space>
       ),
