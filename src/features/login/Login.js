@@ -60,7 +60,6 @@ const Login = () => {
         throw new Error("Please Login by Admin account");
       }
       dispatch(loginSuccess(userData));
-      console.log(userData);
 
       Notification({
         type: NOTIFICATION_TYPE.SUCCESS,
@@ -69,6 +68,7 @@ const Login = () => {
       });
       history.replace(from);
       setLoadingState(false);
+      if (userData?.user?.role_id===3) history.push(`/pharmacy/${userData?.user?.user_role_id}`)
     } catch (error) {
       Notification({
         type: NOTIFICATION_TYPE.ERROR,
