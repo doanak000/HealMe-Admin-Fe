@@ -61,7 +61,9 @@ export const createPatientProfile = async (data) => {
   return response.data;
 };
 export const createBusinessProfile = async (data) => {
+  console.log('data',data);
   const response = await nonAuthAxios.post("/business/api/create", data);
+  console.log('response',response);
   return response.data;
 };
 
