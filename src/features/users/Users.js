@@ -24,7 +24,7 @@ import {
 import { NOTIFICATION_TYPE, PATH } from "../../constants/common";
 import { Notification } from "../../components/Notification/Notification";
 import moment from "moment";
-import JsPDF from 'jspdf';
+import JsPDF from "jspdf";
 import ExportExcel from "../../utils/excelexport.js";
 
 const { Option } = Select;
@@ -143,24 +143,26 @@ const Users = () => {
   };
   const onCloseCreate = () => {
     setOpenCreate(false);
+    setStep(1);
   };
   const onFinishCreate = async (values) => {
-    let {username, password,role_id, email} = values;
+    let { username, password, role_id, email } = values;
     // business_type
     try {
       if (role_id == 3) setBussinessType(1);
       if (role_id == 4) {
-          role_id = 3;
-          setBussinessType(2);
+        role_id = 3;
+        setBussinessType(2);
       }
       const newData = {
-        username, 
-        password, 
-        role_id: 3,
-        email
-      }
+        username,
+        password,
+        role_id,
+        bussiness_type: businessType,
+        email,
+      };
       const userData = await createUser(newData);
-      if(userData[0][0]?.error_message) {
+      if (userData[0][0]?.error_message) {
         Notification({
           type: NOTIFICATION_TYPE.ERROR,
           message: userData[0][0]?.error_message,
@@ -220,17 +222,24 @@ const Users = () => {
     }
   };
   const onCreateProfile = async (values) => {
-    const profileData = {
-      ...values,
-      //birthday: moment(values?.birthday).format("YYYY-MM-DD"),
-      business_type: businessType,
-      ward: selectedWard,
-      user_id: userId,
-    };
     try {
       if (isBusinessId === 2) {
+        const profileData = {
+          ...values,
+          //birthday: moment(values?.birthday).format("YYYY-MM-DD"),
+
+          ward: selectedWard,
+          user_id: userId,
+        };
         const profileDataResponse = await createPatientProfile(profileData);
       } else {
+        const profileData = {
+          ...values,
+          //birthday: moment(values?.birthday).format("YYYY-MM-DD"),
+          business_type: businessType,
+          ward: selectedWard,
+          user_id: userId,
+        };
         const profileDataResponse = await createBusinessProfile(profileData);
       }
       Notification({
@@ -239,6 +248,7 @@ const Users = () => {
         description: null,
       });
       setOpenCreate(false);
+      setStep(1);
     } catch (error) {
       console.log(error);
       Notification({
@@ -246,6 +256,7 @@ const Users = () => {
         message: "Create profile fail",
         description: error?.response?.data?.msg,
       });
+      setStep(1);
     }
   };
 
@@ -267,7 +278,15 @@ const Users = () => {
       title: "Status",
       dataIndex: "account_status",
       key: "account_status",
-      render: (text) => <a>{text == 1 ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>}</a>,
+      render: (text) => (
+        <a>
+          {text == 1 ? (
+            <Tag color="success">Active</Tag>
+          ) : (
+            <Tag color="error">Inactive</Tag>
+          )}
+        </a>
+      ),
     },
     {
       width: "200",
@@ -305,7 +324,11 @@ const Users = () => {
         <Space size="middle">
           <Button onClick={() => showDrawer(record)}>Edit</Button>
           <Button onClick={() => handleDelete(record)}>
-            {_.account_status == 1 ? <p className="text-danger fw-bold">Disable</p> : <p className="text-info fw-bold">Enable</p>}
+            {_.account_status == 1 ? (
+              <p className="text-danger fw-bold">Disable</p>
+            ) : (
+              <p className="text-info fw-bold">Enable</p>
+            )}
           </Button>
         </Space>
       ),
@@ -313,20 +336,25 @@ const Users = () => {
   ];
 
   const generatePDF = () => {
-    const report = new JsPDF('portrait', 'pt', 'a4');
-    report.html(document.querySelector('#table'))
-      .then(() => report.save('report.pdf'))
-  }
+    const report = new JsPDF("portrait", "pt", "a4");
+    report
+      .html(document.querySelector("#table"))
+      .then(() => report.save("report.pdf"));
+  };
 
   return (
     <>
-      <Button className="me-2" onClick={showDrawerCreate} style={{ marginBottom: "10px" }}>
+      <Button
+        className="me-2"
+        onClick={showDrawerCreate}
+        style={{ marginBottom: "10px" }}
+      >
         Create User
       </Button>
       <Button className="bg-info text-white me-2" onClick={generatePDF}>
         Export to PDF
       </Button>
-      <ExportExcel excelData={dataUsers} fileName={'Excel Export'} />
+      <ExportExcel excelData={dataUsers} fileName={"Excel Export"} />
       <Table columns={columns} dataSource={dataUsers} id="table" />
       <Drawer title="Edit User" placement="right" onClose={onClose} open={open}>
         <Form
