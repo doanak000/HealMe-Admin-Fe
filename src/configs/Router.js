@@ -16,7 +16,7 @@ const PrivateRouteRender = (route) => {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const location = useLocation();
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  if (!isLoggedIn) {
+  if (!isLoggedIn || userInfo.role_id === 2) {
     return (
       <Redirect to={{ pathname: PATH.LOGIN, state: { from: location } }} />
     );

@@ -14,6 +14,13 @@ const PharmacyPage = () => {
 
   const columns = [
     {
+      title: 'Hình ảnh',
+      dataIndex: 'pharmacyImage',
+      key: 'pharmacyImage',
+      width: '500',
+      render: (text) => <img src={text} />
+    },
+    {
       title: "Nhà thuốc",
       dataIndex: "pharmacyName",
       key: "pharmacyName",
@@ -29,11 +36,13 @@ const PharmacyPage = () => {
       width: "200",
       key: "action",
       render: (_, record) => (
-        <Button type="primary">
-          <Link to={`/pharmacy/${record.key}`} className="text-decoration-none">
-            Xem chi tiết
-          </Link>
-        </Button>
+        <Space>
+          <Button type="primary">
+            <Link to={`/pharmacy/${record.key}`} className="text-decoration-none">
+              Xem chi tiết
+            </Link>
+          </Button>
+        </Space>
       ),
     },
   ];

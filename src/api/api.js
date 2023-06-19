@@ -61,9 +61,9 @@ export const createPatientProfile = async (data) => {
   return response.data;
 };
 export const createBusinessProfile = async (data) => {
-  console.log('data',data);
+  console.log('data', data);
   const response = await nonAuthAxios.post("/business/api/create", data);
-  console.log('response',response);
+  console.log('response', response);
   return response.data;
 };
 
@@ -127,6 +127,10 @@ export const cancelOrderPres = async (id) => {
   const response = await authAxios.post(`/prescription/order/${id}/cancel`);
   return response.data;
 };
+export const getMediaByBusinessId = async (id) => {
+  const response = await authAxios.get(`/media/get/business/${id}`);
+  return response.data;
+}
 // Export all API call functions
 export default {
   login,
@@ -150,4 +154,5 @@ export default {
   getOrderPres,
   updateStatusOrderPres,
   cancelOrderPres,
+  getMediaByBusinessId
 };

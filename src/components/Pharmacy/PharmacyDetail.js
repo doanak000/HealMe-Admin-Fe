@@ -9,6 +9,7 @@ import {
   getMedicineInPharmacy,
   getPharmacyDetail,
   updateMedicineInPharmacy,
+  getMediaByBusinessId
 } from "../../api/api";
 import {
   Button,
@@ -21,6 +22,7 @@ import {
   Space,
   Drawer,
   Popconfirm,
+  Image
 } from "antd";
 import { GiMedicines } from "react-icons/gi";
 import { PlusOutlined } from "@ant-design/icons";
@@ -43,6 +45,13 @@ const PharmacyDetail = () => {
     price: "",
     name: "",
   });
+  const [pharmacyImg, setPharmacyImg] = useState("");
+
+  useEffect(async () => {
+    await getMediaByBusinessId(+params.id)
+      .then(res => setPharmacyImg(res[0][0].url))
+      .catch(err => console.log(err))
+  })
 
   useEffect(async () => {
     await getMedicineInPharmacy(params.id).then((res) =>
@@ -227,8 +236,12 @@ const PharmacyDetail = () => {
   return (
     <div>
       <div>
+        <Image
+          width={100}
+          src={pharmacyImg}
+        />
         <GiMedicines className="fs-3" />
-        <span className="ms-2 fs-5">{pharmacyDetail?.business_name}</span>
+        <span className="ms-2 fs-5">{pharmacyDetail && pharmacyDetail[0]?.business_name}</span>
       </div>
       <div>
         <Button
