@@ -92,7 +92,6 @@ const LayoutAdmin = (props) => {
             <Link
               to={PATH.PHARMACY}
               onClick={() => selectTabName(translation.TAB_PHARMACY)}
-              className={userInfo?.role_id === 3 ? "d-none" : "d-block text-decoration-none"}
             >
               {translation.TAB_PHARMACY}
             </Link>
