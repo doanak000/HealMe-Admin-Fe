@@ -131,6 +131,10 @@ export const getMediaByBusinessId = async (id) => {
   const response = await authAxios.get(`/media/get/business/${id}`);
   return response.data;
 }
+export const uploadPhoto = async (data) => {
+  const response = await authAxios.post(`/media/upload/photo`, data);
+  return response.data;
+}
 // Export all API call functions
 export default {
   login,
@@ -154,5 +158,6 @@ export default {
   getOrderPres,
   updateStatusOrderPres,
   cancelOrderPres,
-  getMediaByBusinessId
+  getMediaByBusinessId,
+  uploadPhoto
 };
