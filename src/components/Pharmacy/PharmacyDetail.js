@@ -9,7 +9,8 @@ import {
   getMedicineInPharmacy,
   getPharmacyDetail,
   updateMedicineInPharmacy,
-  getMediaByBusinessId
+  getMediaByBusinessId,
+  uploadPhoto
 } from "../../api/api";
 import {
   Button,
@@ -22,14 +23,17 @@ import {
   Space,
   Drawer,
   Popconfirm,
-  Image
+  Image,
+  message,
+  Upload
 } from "antd";
 import { GiMedicines } from "react-icons/gi";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { Notification } from "../Notification/Notification";
 import { NOTIFICATION_TYPE } from "../../constants/common";
 import ExportExcel from "../../utils/excelexport";
 import jsPDF from "jspdf";
+import axios from "axios";
 
 const PharmacyDetail = () => {
   const params = useParams();
@@ -233,6 +237,51 @@ const PharmacyDetail = () => {
       .then(() => report.save('report.pdf'))
   }
 
+  // Upload
+  const props = {
+    name: 'file',
+    action: 'http://localhost:3000/media/upload/photo',
+    headers: {
+      authorization: 'authorization-text',
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
+
+  const uploadImage = options => {
+
+    const { onSuccess, onError, file, onProgress } = options;
+
+    const fmData = new FormData();
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+      onUploadProgress: event => {
+        console.log((event.loaded / event.total) * 100);
+        onProgress({ percent: (event.loaded / event.total) * 100 }, file);
+      }
+    };
+    fmData.append("image", file);
+    fmData.append("business_id", params.id);
+    axios
+      .post("http://localhost:3000/media/upload/photo", fmData, config)
+      .then(res => {
+        onSuccess(file);
+        console.log(res);
+      })
+      .catch(err => {
+        const error = new Error('Some error');
+        onError({ event: error });
+      });
+  }
+
   return (
     <div>
       <div>
@@ -243,22 +292,23 @@ const PharmacyDetail = () => {
         <GiMedicines className="fs-3" />
         <span className="ms-2 fs-5">{pharmacyDetail && pharmacyDetail[0]?.business_name}</span>
       </div>
-      <div>
+      <Space>
         <Button
           type="primary"
           icon={<PlusOutlined className="me-1" />}
-          className="d-flex align-items-center my-2"
+          className="d-inline-flex align-items-center my-2"
           onClick={handleAddNewMedicine}
         >
           Thêm thuốc
         </Button>
-      </div>
-      <div>
-        <Button className="bg-info text-white me-2" onClick={generatePDF}>
+        <Upload {...props} customRequest={uploadImage}>
+          <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        </Upload>
+        <Button className="bg-info text-white" onClick={generatePDF}>
           Export to PDF
         </Button>
         <ExportExcel excelData={data} fileName={'Excel Export'} />
-      </div>
+      </Space>
       <div>
         <Table columns={columns} dataSource={data} id="table" />
       </div>
